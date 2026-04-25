@@ -1,7 +1,7 @@
 import pygame
 from maze_generator import generate_maze
 from maze_solver import solve_bfs, solve_dfs
-from maze_visualizer import draw_maze, draw_sidebar
+from maze_visualizer import draw_maze, draw_sidebar, BG_COLOR
 
 COLS = 20
 ROWS = 15
@@ -10,6 +10,8 @@ MAZE_W = COLS * CELL_SIZE   # 700
 SIDEBAR_W = 200
 WIN_W = MAZE_W + SIDEBAR_W  # 900
 WIN_H = ROWS * CELL_SIZE    # 525
+START = (0, 0)
+END   = (COLS - 1, ROWS - 1)
 
 
 def main():
@@ -29,17 +31,19 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_b:
-                    path, steps = solve_bfs(grid, (0, 0), (COLS - 1, ROWS - 1))
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_b:
+                    path, steps = solve_bfs(grid, START, END)
                     algo_name = "BFS"
                 elif event.key == pygame.K_d:
-                    path, steps = solve_dfs(grid, (0, 0), (COLS - 1, ROWS - 1))
+                    path, steps = solve_dfs(grid, START, END)
                     algo_name = "DFS"
                 elif event.key == pygame.K_r:
                     grid = generate_maze(COLS, ROWS)
                     path, steps, algo_name = [], 0, ""
 
-        screen.fill((245, 245, 245))
+        screen.fill(BG_COLOR)
         draw_maze(screen, grid, path, CELL_SIZE)
         draw_sidebar(screen, algo_name, steps, len(path), MAZE_W, SIDEBAR_W, WIN_H)
         pygame.display.flip()
