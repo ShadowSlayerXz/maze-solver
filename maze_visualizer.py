@@ -11,11 +11,21 @@ DIM_COLOR    = (160, 160, 160)
 ACCENT_COLOR = (100, 210, 255)
 TITLE_COLOR  = (255, 220, 50)
 
+_fonts = {}
+
+
+def _get_fonts():
+    if not _fonts:
+        _fonts["title"] = pygame.font.SysFont("monospace", 16, bold=True)
+        _fonts["label"] = pygame.font.SysFont("monospace", 13)
+        _fonts["value"] = pygame.font.SysFont("monospace", 20, bold=True)
+    return _fonts
+
 
 def draw_maze(surface, grid, path, cell_size, offset_x=0, offset_y=0):
     rows = len(grid)
     cols = len(grid[0])
-    path_set = set(path)
+    path_set = set(path) if path else set()
 
     for row in range(rows):
         for col in range(cols):
@@ -47,9 +57,10 @@ def draw_maze(surface, grid, path, cell_size, offset_x=0, offset_y=0):
 def draw_sidebar(surface, algo_name, steps, path_len, sidebar_x, sidebar_width, height):
     pygame.draw.rect(surface, SIDEBAR_BG, (sidebar_x, 0, sidebar_width, height))
 
-    font_title = pygame.font.SysFont("monospace", 16, bold=True)
-    font_label = pygame.font.SysFont("monospace", 13)
-    font_value = pygame.font.SysFont("monospace", 20, bold=True)
+    fonts = _get_fonts()
+    font_title = fonts["title"]
+    font_label = fonts["label"]
+    font_value = fonts["value"]
 
     def blit(text, font, color, y):
         surf = font.render(text, True, color)
@@ -76,4 +87,4 @@ def draw_sidebar(surface, algo_name, steps, path_len, sidebar_x, sidebar_width, 
     y += 4
     y = blit("B  BFS solve", font_label, TEXT_COLOR, y)
     y = blit("D  DFS solve", font_label, TEXT_COLOR, y)
-    y = blit("R  Regenerate", font_label, TEXT_COLOR, y)
+    blit("R  Regenerate", font_label, TEXT_COLOR, y)
