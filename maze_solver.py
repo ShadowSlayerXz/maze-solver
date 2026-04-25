@@ -26,13 +26,12 @@ def solve_bfs(grid, start, end):
     while queue:
         (x, y), path = queue.popleft()
         steps += 1
+        if (x, y) == end:
+            return path, steps
         for nx, ny in get_neighbors(grid, x, y):
             if (nx, ny) not in visited:
                 visited.add((nx, ny))
-                new_path = path + [(nx, ny)]
-                if (nx, ny) == end:
-                    return new_path, steps
-                queue.append(((nx, ny), new_path))
+                queue.append(((nx, ny), path + [(nx, ny)]))
     return [], steps
 
 

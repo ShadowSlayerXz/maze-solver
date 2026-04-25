@@ -54,3 +54,7 @@ def test_start_equals_end():
     ]
     path, steps = solve_bfs(grid, (0, 0), (0, 0))
     assert path == [(0, 0)]
+    assert steps == 0
+    path, steps = solve_dfs(grid, (0, 0), (0, 0))
+    assert path == [(0, 0)]
+    assert steps == 0
