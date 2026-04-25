@@ -87,4 +87,5 @@ def draw_sidebar(surface, algo_name, steps, path_len, sidebar_x, sidebar_width, 
     y += 4
     y = blit("B  BFS solve", font_label, TEXT_COLOR, y)
     y = blit("D  DFS solve", font_label, TEXT_COLOR, y)
-    blit("R  Regenerate", font_label, TEXT_COLOR, y)
+    y = blit("R  Regenerate", font_label, TEXT_COLOR, y)
+    blit("Esc  Quit", font_label, TEXT_COLOR, y)
